@@ -8,6 +8,6 @@
 
 ## План
 Телеграм бот - @Calculate_Math_3A_bot
-
+библиотека - pip install pytelegrambotapi
 ## Результат
 
