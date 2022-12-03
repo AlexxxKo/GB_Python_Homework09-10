@@ -1,6 +1,6 @@
 import telebot
 
-bot = telebot.TeleBot('5796676733:AAHferVziayWmb41wa_uRbz5TbOcnBaORxU')
+bot = telebot.TeleBot('') # your token
 
 value = ''
 old_value = ''
