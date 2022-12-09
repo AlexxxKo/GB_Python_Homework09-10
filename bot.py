@@ -1,6 +1,11 @@
 import telebot
 
-bot = telebot.TeleBot('') # your token
+bot = telebot.TeleBot('5835523259:AAEsu5zaslzDpQ_-J9rZFEmbAUm0iNIbwBs') # your token
+
+@bot.message_handler(commands=['hi'])
+def getMassage(message):
+    bot.send_message(message.from_user.id, 'Приветствуем Вас в калькуляторе Python!')
+
 
 value = ''
 old_value = ''
