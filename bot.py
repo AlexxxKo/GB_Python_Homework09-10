@@ -1,6 +1,7 @@
 import telebot
 
-bot = telebot.TeleBot('') # your token
+bot = telebot.TeleBot(
+    '5796676733:AAHferVziayWmb41wa_uRbz5TbOcnBaORxU')  # your token
 
 value = ''
 old_value = ''
@@ -51,18 +52,23 @@ def calback_func(query):
         pass
     elif data == 'C':
         value = ''
+        print(value)
     elif data == '^':
         value = '**'
+        print(value)
     elif data == '<=':
         if value != '':
             value = value[:len(value)-1]
+        print(value)
     elif data == '=':
         try:
             value = str(eval(value))
+            print(value)
         except:
             value = 'Ошибка!'
     else:
         value += data
+        print(value)
 
     if (value != old_value and value != '') or (0 != old_value and value == ''):
         if value == '':
