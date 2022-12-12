@@ -20,7 +20,7 @@ def getMassage(message):
     bot.message_handler(commands=['calculate'])
 
 def read_data(getMassage) -> dict:
-    split = getMassage.split
+    split = getMassage.split(',')
     dct = {
         'num1': '',
         'num2': '',
