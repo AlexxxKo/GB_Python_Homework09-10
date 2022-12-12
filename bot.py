@@ -1,87 +1,125 @@
 import telebot
 
-bot = telebot.TeleBot(
-    '5796676733:AAHferVziayWmb41wa_uRbz5TbOcnBaORxU')  # your token
-
-value = ''
-old_value = ''
-
-keyboard = telebot.types.InlineKeyboardMarkup()
-keyboard.row(telebot.types.InlineKeyboardButton('C', callback_data='C'),
-             telebot.types.InlineKeyboardButton('*', callback_data='*'),
-             telebot.types.InlineKeyboardButton('/', callback_data='/'),
-             telebot.types.InlineKeyboardButton('+', callback_data='+'),
-             )
-keyboard.row(telebot.types.InlineKeyboardButton('7', callback_data='7'),
-             telebot.types.InlineKeyboardButton('8', callback_data='8'),
-             telebot.types.InlineKeyboardButton('9', callback_data='9'),
-             telebot.types.InlineKeyboardButton('i', callback_data='i'),
-             )
-keyboard.row(telebot.types.InlineKeyboardButton('4', callback_data='4'),
-             telebot.types.InlineKeyboardButton('5', callback_data='5'),
-             telebot.types.InlineKeyboardButton('6', callback_data='6'),
-             telebot.types.InlineKeyboardButton('^', callback_data='**'),
-             )
-keyboard.row(telebot.types.InlineKeyboardButton('1', callback_data='1'),
-             telebot.types.InlineKeyboardButton('2', callback_data='2'),
-             telebot.types.InlineKeyboardButton('3', callback_data='3'),
-             telebot.types.InlineKeyboardButton('-', callback_data='-'),
-             )
-keyboard.row(telebot.types.InlineKeyboardButton('', callback_data='no'),
-             telebot.types.InlineKeyboardButton('0', callback_data='0'),
-             telebot.types.InlineKeyboardButton('<=', callback_data='<='),
-             telebot.types.InlineKeyboardButton('=', callback_data='='),
-             )
+bot = telebot.TeleBot('')  # your token
 
 
-@bot.message_handler(commands=['start', 'calculate'])
-def getMassage(massage):
-    global value
-    if value == '':
-        bot.send_message(massage.from_user.id, '0', reply_markup=keyboard)
-    else:
-        bot.send_message(massage.from_user.id, value, reply_markup=keyboard)
+@bot.message_handler(commands=['calculate'])
+def getMassage(message):
+    bot.send_message(message.from_user.id, ('''\nВведите числа через запятую, и добавьте так-же 
+                \nдействие из приведенных ниже:
+                + для сложения
+                - Для вычитания
+                * Для умножения
+                / Для деления
+                ^ Для возведения в квадрат \n'''))
+
+    bot.message_handler(commands=['calculate'])
 
 
-@bot.callback_query_handler(func=lambda call: True)
-def calback_func(query):
-    global value, old_value
-    data = query.data
+def read_data(getMassage) -> dict:
+    split = getMassage.split(',')
+    dct = {
+        'num1': '',
+        'num2': '',
+        'operator': '',
+        'result': '',
+    }
+
+# import logging
+#     # Запись лога при делении на ноль.
+# def result_log(dct:dict):
+#     logging.basicConfig(
+#         level = logging.WARNING,
+#         filename = "calculator.log",
+#         format = "%(asctime)s  %(module)s - %(levelname)s - %(funcName)s: %(message)s",
+#         datefmt = '%Y-%m-%d %H:%M:%S'
+#     )
+#     logging.warning('Attempt to divite by zero.')
+#     # Запись лога при неверно введённых данных.
+# def entered_data (dct:dict):
+#     logging.basicConfig(
+#         level = logging.WARNING ,
+#         filename = "calculator.log",
+#         format = "%(asctime)s %(module)s - %(levelname)s - %(funcName)s: %(message)s",
+#         datefmt = '%Y-%m-%d %H:%M:%S'
+#     )
+#     logging.warning('Data entry error.')
+
+
+# value = ''
+# old_value = ''
+
+# keyboard = telebot.types.InlineKeyboardMarkup()
+# keyboard.row(telebot.types.InlineKeyboardButton('C', callback_data='C'),
+#              telebot.types.InlineKeyboardButton('*', callback_data='*'),
+#              telebot.types.InlineKeyboardButton('/', callback_data='/'),
+#              telebot.types.InlineKeyboardButton('+', callback_data='+'),
+#              )
+# keyboard.row(telebot.types.InlineKeyboardButton('7', callback_data='7'),
+#              telebot.types.InlineKeyboardButton('8', callback_data='8'),
+#              telebot.types.InlineKeyboardButton('9', callback_data='9'),
+#              telebot.types.InlineKeyboardButton('i', callback_data='i'),
+#              )
+# keyboard.row(telebot.types.InlineKeyboardButton('4', callback_data='4'),
+#              telebot.types.InlineKeyboardButton('5', callback_data='5'),
+#              telebot.types.InlineKeyboardButton('6', callback_data='6'),
+#              telebot.types.InlineKeyboardButton('^', callback_data='**'),
+#              )
+# keyboard.row(telebot.types.InlineKeyboardButton('1', callback_data='1'),
+#              telebot.types.InlineKeyboardButton('2', callback_data='2'),
+#              telebot.types.InlineKeyboardButton('3', callback_data='3'),
+#              telebot.types.InlineKeyboardButton('-', callback_data='-'),
+#              )
+# keyboard.row(telebot.types.InlineKeyboardButton('', callback_data='no'),
+#              telebot.types.InlineKeyboardButton('0', callback_data='0'),
+#              telebot.types.InlineKeyboardButton('<=', callback_data='<='),
+#              telebot.types.InlineKeyboardButton('=', callback_data='='),
+#              )
+
+
+# @bot.message_handler(commands=['start', 'calculate'])
+# def getMassage(massage):
+#     global value
+#     if value == '':
+#         bot.send_message(massage.from_user.id, '0', reply_markup=keyboard)
+#     else:
+#         bot.send_message(massage.from_user.id, value, reply_markup=keyboard)
+
+
+# @bot.callback_query_handler(func=lambda call: True)
+# def calback_func(query):
+#     global value, old_value
+#     data = query.data
 
     if data == 'no':
         pass
     elif data == 'C':
         value = ''
-        print(value)
     elif data == '^':
         value = '**'
-        print(value)
     elif data == '<=':
         if value != '':
             value = value[:len(value)-1]
-        print(value)
     elif data == '=':
         try:
             value = str(eval(value))
-            print(value)
         except:
             value = 'Ошибка!'
     else:
         value += data
-        print(value)
 
-    if (value != old_value and value != '') or (0 != old_value and value == ''):
-        if value == '':
-            bot.edit_message_text(chat_id=query.message.chat.id,
-                                  message_id=query.message.message_id, text='0', reply_markup=keyboard)
-            old_value = '0'
-        else:
-            bot.edit_message_text(chat_id=query.message.chat.id,
-                                  message_id=query.message.message_id, text=value, reply_markup=keyboard)
+#     if (value != old_value and value != '') or (0 != old_value and value == ''):
+#         if value == '':
+#             bot.edit_message_text(chat_id=query.message.chat.id,
+#                                   message_id=query.message.message_id, text='0', reply_markup=keyboard)
+#             old_value = '0'
+#         else:
+#             bot.edit_message_text(chat_id=query.message.chat.id,
+#                                   message_id=query.message.message_id, text=value, reply_markup=keyboard)
 
-    old_value = value
-    if value == 'Ошибка':
-        value = ''
+#     old_value = value
+#     if value == 'Ошибка':
+#         value = ''
 
 
 bot.polling(none_stop=False, interval=0)
