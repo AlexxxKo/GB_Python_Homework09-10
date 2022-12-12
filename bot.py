@@ -28,6 +28,28 @@ def read_data(getMassage) -> dict:
         'result': '',
     }
 
+# import logging
+#     # Запись лога при делении на ноль.
+# def result_log(dct:dict):
+#     logging.basicConfig(
+#         level = logging.WARNING,
+#         filename = "calculator.log",
+#         format = "%(asctime)s  %(module)s - %(levelname)s - %(funcName)s: %(message)s",
+#         datefmt = '%Y-%m-%d %H:%M:%S'
+#     )
+#     logging.warning('Attempt to divite by zero.')
+#     # Запись лога при неверно введённых данных.
+# def entered_data (dct:dict):
+#     logging.basicConfig(
+#         level = logging.WARNING ,
+#         filename = "calculator.log",
+#         format = "%(asctime)s %(module)s - %(levelname)s - %(funcName)s: %(message)s",
+#         datefmt = '%Y-%m-%d %H:%M:%S'
+#     )
+#     logging.warning('Data entry error.')
+
+
+
 # value = ''
 # old_value = ''
 
